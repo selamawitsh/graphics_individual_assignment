@@ -1,12 +1,12 @@
 import * as THREE from 'three';
 
 export function addLighting(scene) {
-  // Ambient light
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.35);
+  // Soft blue ambient light for dark theme
+  const ambientLight = new THREE.AmbientLight(0x222a35, 0.7);
   scene.add(ambientLight);
 
-  // Main directional light (like sun)
-  const dirLight = new THREE.DirectionalLight(0xfff8e7, 1);
+  // Main directional light (cool white)
+  const dirLight = new THREE.DirectionalLight(0xbfdcff, 1.1);
   dirLight.position.set(5, 10, 7);
   dirLight.castShadow = true;
 
@@ -21,8 +21,8 @@ export function addLighting(scene) {
 
   scene.add(dirLight);
 
-  // Soft fill light from below/front
-  const fillLight = new THREE.DirectionalLight(0xbfe3ff, 0.3);
+  // Soft fill light from below/front (blue accent)
+  const fillLight = new THREE.DirectionalLight(0x3a6ea5, 0.35);
   fillLight.position.set(-5, 2, 5);
   scene.add(fillLight);
 }

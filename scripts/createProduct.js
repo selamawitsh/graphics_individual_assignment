@@ -3,17 +3,17 @@ import * as THREE from 'three';
 export function createProduct(scene) {
   const group = new THREE.Group();
 
-  // Colors for parts
+  // Brown colors for a wooden chair
   const colors = {
-    seat: 0x8B4513,       // SaddleBrown
-    legs: 0x5C4033,       // Dark Brown
-    backrest: 0xA0522D    // Sienna
+    seat: 0x8B5C2A,       // Brown
+    legs: 0x6B4226,       // Darker brown
+    backrest: 0x8B5C2A    // Brown
   };
 
-  // Materials with physical properties for realism
-  const seatMat = new THREE.MeshPhysicalMaterial({ color: colors.seat, roughness: 0.6, metalness: 0.1 });
-  const legMat = new THREE.MeshPhysicalMaterial({ color: colors.legs, roughness: 0.7, metalness: 0.2 });
-  const backrestMat = new THREE.MeshPhysicalMaterial({ color: colors.backrest, roughness: 0.5, metalness: 0.1 });
+  // Materials with subtle emissive for glow effect
+  const seatMat = new THREE.MeshPhysicalMaterial({ color: colors.seat, roughness: 0.5, metalness: 0.2, emissive: 0x3e2412, emissiveIntensity: 0.10 });
+  const legMat = new THREE.MeshPhysicalMaterial({ color: colors.legs, roughness: 0.6, metalness: 0.2, emissive: 0x2d180a, emissiveIntensity: 0.08 });
+  const backrestMat = new THREE.MeshPhysicalMaterial({ color: colors.backrest, roughness: 0.4, metalness: 0.2, emissive: 0x3e2412, emissiveIntensity: 0.10 });
 
   // Seat (box)
   const seat = new THREE.Mesh(new THREE.BoxGeometry(2, 0.2, 2), seatMat);
@@ -50,6 +50,13 @@ export function createProduct(scene) {
   group.add(backrest);
 
   scene.add(group);
+
+  // Store materials for hover effect
+  group.userData = {
+    seatMat,
+    legMat,
+    backrestMat
+  };
 
   return group;
 }

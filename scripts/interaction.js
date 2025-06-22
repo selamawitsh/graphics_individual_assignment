@@ -18,18 +18,21 @@ export function setupInteractions(scene, camera, renderer, productGroup) {
     if (intersects.length > 0) {
       if (hoveredObject !== intersects[0].object) {
         if (hoveredObject) {
-          gsap.to(hoveredObject.scale, { x: 1, y: 1, z: 1, duration: 0.3 });
+          gsap.to(hoveredObject.scale, { x: 1, y: 1, z: 1, duration: 0.3, ease: "power2.out" });
+          gsap.to(hoveredObject.material, { emissiveIntensity: 0.12, duration: 0.3 });
         }
         hoveredObject = intersects[0].object;
-        gsap.to(hoveredObject.scale, { x: 1.1, y: 1.1, z: 1.1, duration: 0.3 });
+        gsap.to(hoveredObject.scale, { x: 1.15, y: 1.15, z: 1.15, duration: 0.35, ease: "power2.out" });
+        gsap.to(hoveredObject.material, { emissive: { r: 0.2, g: 0.4, b: 0.7 }, emissiveIntensity: 0.45, duration: 0.35 });
       }
-      document.body.style.cursor = 'pointer';
+      document.body.classList.add('pointer');
     } else {
       if (hoveredObject) {
-        gsap.to(hoveredObject.scale, { x: 1, y: 1, z: 1, duration: 0.3 });
+        gsap.to(hoveredObject.scale, { x: 1, y: 1, z: 1, duration: 0.3, ease: "power2.out" });
+        gsap.to(hoveredObject.material, { emissive: { r: 0.07, g: 0.07, b: 0.07 }, emissiveIntensity: 0.12, duration: 0.3 });
         hoveredObject = null;
       }
-      document.body.style.cursor = 'default';
+      document.body.classList.remove('pointer');
     }
   }
 
@@ -44,11 +47,9 @@ export function setupInteractions(scene, camera, renderer, productGroup) {
       const obj = intersects[0].object;
       const originalColor = obj.material.color.getHex();
 
-      // Animate color change
+      // Animate color change (flash blue)
       gsap.to(obj.material.color, {
-        r: 1,
-        g: 0,
-        b: 0,
+        r: 0.2, g: 0.6, b: 1,
         duration: 0.3,
         yoyo: true,
         repeat: 1,
